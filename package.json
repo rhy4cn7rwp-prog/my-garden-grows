@@ -1,0 +1,9 @@
+{
+  "name": "my-garden-grows",
+  "version": "1.0.0-dev",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "python3 -m http.server 8000 --bind 0.0.0.0"
+  }
+}
