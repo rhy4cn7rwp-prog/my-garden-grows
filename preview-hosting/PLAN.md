@@ -1,8 +1,12 @@
 # Isolated iPhone preview deployment
 
-Status: NOT DEPLOYED. GitHub API access is blocked by the execution environment's
-network proxy (HTTP CONNECT 403 for api.github.com). Existing Git authentication
-works for Git operations; no new GitHub token has been requested.
+Status: NOT DEPLOYED. Network/API access is now working. Read-only API checks
+confirmed the original live site uses `my-garden-grows` main at `/` with no
+custom domain. Creation of `my-garden-grows-preview` was rejected by GitHub:
+`Resource not accessible by integration (createRepository)`. The user must create
+the empty preview repository and grant this Codex GitHub connection access to it.
+Do not request or transmit secret values in chat. No existing Pages settings
+have been changed.
 
 ## Deployment target
 
@@ -49,3 +53,14 @@ allowlist, retaining existing entries and GitHub presets. The preview's final
 `rhy4cn7rwp-prog.github.io` hostname must also be reachable for deployment checks.
 This is an environment networking change, not a change to the live game's
 GitHub Pages source. Never ask the user to paste credentials into chat.
+
+## Remaining user setup
+
+In GitHub create a new **public**, empty repository named
+`my-garden-grows-preview` under `rhy4cn7rwp-prog`. Do not initialize it with a
+README, license, or .gitignore. In the GitHub connection/app used by Codex, include
+that new repository in the repositories it can access. Then the agent can push
+the staged files and enable Pages on the new repository only.
+
+The browser smoke test accepts `PREVIEW_URL` for testing the eventual HTTPS
+preview. Its default still tests the local development server.

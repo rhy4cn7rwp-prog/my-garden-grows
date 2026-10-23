@@ -1,4 +1,5 @@
 """Run with python3 tests/browser_smoke.py; starts its own local server."""
+import os
 from functools import partial
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -15,7 +16,7 @@ try:
   assert page.evaluate('navigator.maxTouchPoints') > 0
   errors=[]
   page.on('pageerror', lambda e: errors.append(str(e)))
-  page.goto(f'http://127.0.0.1:{server.server_port}/development/')
+  page.goto(os.environ.get('PREVIEW_URL', f'http://127.0.0.1:{server.server_port}/development/'))
   page.get_by_role('button',name='Dream Shop',exact=True).tap()
   page.locator('.spot').first.tap()
   page.get_by_role('button',name='🎯 Choose this dream',exact=True).tap()
