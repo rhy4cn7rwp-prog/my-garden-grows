@@ -56,14 +56,7 @@ function renderScene() {
     bottom = `<h2>🌱 My Garden Grows</h2><p>Tap a building to explore! Your dream: ${DREAMS[state.goal][2]} · ${money(DREAMS[state.goal][3])}</p><div class="row"><button class="btn alt" onclick="go('supplies')">🧺 Market Supplies</button><button class="btn alt" onclick="settings()">⚙ Settings</button></div>`;
   }
   if (view === "dream") {
-    for (let [id, x, y, w, h] of [
-      ["ball", 4, 27, 26, 29],
-      ["bike", 11, 57, 45, 36],
-      ["tablet", 77, 23, 21, 37],
-      ["guitar", 83, 54, 16, 39],
-      ["camera", 57, 62, 29, 30],
-      ["puppy", 50, 30, 25, 29],
-    ])
+    for (let [id, x, y, w, h] of SHOP_HOTSPOTS.dream)
       stage += spot(
         x,
         y,
@@ -75,21 +68,8 @@ function renderScene() {
     bottom = `<h2>🎯 Dream Shop</h2><p>Tap a real item on the shelves to choose what you're saving for.</p><div class="progress"><span style="width:${Math.min(100, (100 * state.cash) / DREAMS[state.goal][3])}%"></span></div><p>${money(state.cash)} saved toward ${DREAMS[state.goal][2]} (${money(DREAMS[state.goal][3])})</p>`;
   }
   if (view === "seeds") {
-    let positions = [
-      [12, 47],
-      [30, 47],
-      [48, 47],
-      [67, 47],
-      [84, 47],
-      [12, 67],
-      [30, 67],
-      [48, 67],
-      [67, 67],
-      [84, 67],
-    ];
-    CROPS.forEach((c, i) => {
-      let [x, y] = positions[i];
-      stage += spot(x - 7, y - 8, 16, 19, `seed('${c.id}')`, c.name + " seeds");
+    SHOP_HOTSPOTS.seeds.forEach(([id, x, y, w, h]) => {
+      stage += spot(x, y, w, h, `seed('${id}')`, crop(id).name + " seeds");
     });
     bottom = `<h2>🌰 Seed & Feed</h2><p>Tap a seed packet on the display to learn about it and add it to your basket.</p><button class="btn alt" onclick="bundleInfo()">📦 Variety bundle · $11 (save $1)</button><button class="btn" onclick="cart('seeds')">🛒 Basket (${Object.values(state.cart).reduce((a, b) => a + b, 0)}) · ${money(CROPS.reduce((a, c) => a + (state.cart[c.id] || 0) * c.seed, 0))}</button>`;
   }
@@ -104,23 +84,16 @@ function renderScene() {
     bottom = `<h2>🌿 My Garden · 5 × 5</h2><p>Tap a plot to plant, inspect or harvest. ${state.plots.filter(Boolean).every((p) => p.watered) ? "💧 Plants watered today!" : "Plants need water to grow."}</p><div class="row"><button class="btn" onclick="water()">💧 Water all</button><button class="btn" onclick="plantPlanned()">🌱 Plant plan (${Object.keys(state.plan).length})</button><button class="btn alt" onclick="endDay()">☀️ End day</button><button class="btn alt" onclick="inventory()">🧺 Harvest basket</button></div>`;
   }
   if (view === "supplies") {
-    let ps = [
-      ["table", 6, 18, 47, 36],
-      ["canopy", 57, 18, 40, 40],
-      ["bags", 8, 57, 40, 35],
-      ["scale", 52, 57, 44, 35],
-    ];
-    ps.forEach(
-      ([id, x, y, w, h]) =>
-        (stage += spot(
-          x,
-          y,
-          w,
-          h,
-          `supply('${id}')`,
-          SUPPLIES.find((s) => s[0] === id)[2],
-        )),
-    );
+    SHOP_HOTSPOTS.supplies.forEach(([id, x, y, w, h]) => {
+      stage += spot(
+        x,
+        y,
+        w,
+        h,
+        `supply('${id}')`,
+        SUPPLIES.find((s) => s[0] === id)[2],
+      );
+    });
     bottom = `<h2>🧺 Market Supplies</h2><p>Tap the table, canopy, paper bags, or scale on the shelves.</p><button class="btn" onclick="cart('supplies')">🛒 Basket (${Object.values(state.supcart).reduce((a, b) => a + b, 0)})</button>`;
   }
   if (view === "market") {

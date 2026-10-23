@@ -1,0 +1,12 @@
+MY GARDEN GROWS 1.0 — DEVELOPMENT PLAYTEST
+
+No Terminal, installation, or account inside the game is needed.
+
+1. If you downloaded a ZIP, double-click it in Finder to unzip it.
+2. Open the playtest folder.
+3. Right-click My-Garden-Grows-1.0.html and choose Open With > Google Chrome
+   (or Safari).
+
+Keep using the same file and browser to retain your farm progress.
+Private browsing or browser storage restrictions may prevent progress saving.
+This is a development copy. Playing it does not change the live website.
